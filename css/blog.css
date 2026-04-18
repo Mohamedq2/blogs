@@ -1,0 +1,114 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+:root {
+    --logl-color: #fdb90e;
+    --first-color: #304e95;
+    --secound-color: #ddd;
+
+}
+a {
+    text-decoration: none;
+}
+
+/* Start Nav */
+.navbar :not(:first-child) {
+    color: var(--secound-color);
+    padding: 15px;
+    border-radius: 5px;
+}
+.navbar :not(:first-child):not(:last-child):hover {
+    cursor: pointer;
+    background-color: #eee;
+}
+.navbar::after,
+.content::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background-color: var(--secound-color);
+}
+.navbar .active {
+    background-color: var(--logl-color);
+    color: var(--first-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+/* End Nav */
+/* Start blog Word */
+.blogword {
+    color: var(--first-color);
+    text-align: center;
+    font-size: 2.5rem;
+}
+/* End Blog Word */
+/* Start Content */
+.content {
+    position: relative;
+}
+
+.content .cards .card {
+    padding: 15px;
+    background-color: #eee;
+    border-radius: 0;
+    border: 0 transparent;
+}
+
+.content .cards .card .head {
+    font-weight: bold;
+}
+.content .cards .card .text .read,
+.content .cards .card .text .go p .advice {
+    color: var(--first-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+.content .cards .card .text .go p {
+    color: var(--secound-color);
+}
+.content .cards .card .btn {
+    background-color: var(--logl-color);
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.search .sidebar ul li a {
+    color: #ddd;
+    font-size: .8rem;
+}
+.list-group-item.active {
+    background-color: var(--logl-color) !important;
+    border-color: var(--logl-color) !important;
+}
+.content .pages nav .pagination .page-link {
+    border: none;
+    background-color: var(--logl-color);
+    color: white;
+    margin: 10px 10px 10px 0;
+}
+.content .pages nav .pagination .active .page-link,
+.content .pages nav .pagination .page-link:hover {
+    background-color: var(--secound-color);
+} 
+.search .sidebar .list-group-item {
+    border: none;
+}
+/* End Content */
+/* Start Footer */
+.footer {
+    color: var(--secound-color);
+    font-size: 12px;
+}
+.footer ul li {
+    margin-left: 15px;
+}
+.footer ul li a {
+    color: var(--secound-color);
+}
+.footer ul li .active,
+.footer ul li a:hover {
+    color: var(--logl-color);
+}
+/* End Footer */
