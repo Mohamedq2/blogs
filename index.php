@@ -417,7 +417,7 @@ if (isset($_POST['type']) && $_POST['type'] == "delete_dep") {
             let name = document.getElementById('dep_name').value;
 
             let type = id ? 'update_dep' : 'add_dep';
-
+            //  commit 2
             fetch('', {
                     method: 'POST',
                     headers: {
