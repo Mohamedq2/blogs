@@ -12,14 +12,18 @@ a {
 }
 
 /* Start Nav */
-.navbar :not(:first-child) {
+.navbar :not(:first-child):not(.user) {
     color: var(--secound-color);
     padding: 15px;
     border-radius: 5px;
 }
-.navbar :not(:first-child):not(:last-child):hover {
+.navbar :not(:first-child):not(.user):not(:last-child):hover {
     cursor: pointer;
     background-color: #eee;
+    color: black;
+}
+.navbar :last-child {
+    color: var(--first-color);
 }
 .navbar::after,
 .content::after {
@@ -32,9 +36,14 @@ a {
 }
 .navbar .active {
     background-color: var(--logl-color);
-    color: var(--first-color);
+    color: var(--first-color) !important;
     font-weight: bold;
     font-size: 1.2rem;
+}
+.navbar .user {
+    color: var(--first-color);
+    font-weight: bold;
+    font-size: 1.25rem;
 }
 /* End Nav */
 /* Start blog Word */

@@ -28,7 +28,6 @@ if (isset($_POST['submit'])) {
         ':image'      => $imagePath
 
     ]);
-    
 }
 ?>
 <!DOCTYPE html>
@@ -64,44 +63,51 @@ if (isset($_POST['submit'])) {
             <a class="flex-sm-fill text-sm-center nav-link" href="#">Home</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#">Features</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#">Contact</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#">More</a>
+            <!-- <a class="flex-sm-fill text-sm-center nav-link" href="#">More</a> -->
+            <?php
+            session_start();
+            if (!empty($_SESSION['user'])): ?>
+                <a class="flex-sm-fill text-sm-center nav-link user" href="logout.php" title="logout">
+                    Welcome<?= " " . $_SESSION['user']['user_name'] ?> <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            <?php endif; ?>
             <a class="flex-sm-fill text-sm-center nav-link active" href="index.php">Blog</a>
         </div>
     </nav>
     <!-- End Navbar -->
     <!-- Start Form -->
     <form action="#" method="post" class="mt-3" enctype="multipart/form-data" ">
-        <div class="container">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" name="title" class="form-control" id="title" placeholder="Block Title">
-            </div>
-                <div class="mb-3">
-                <label for="title" class="form-label">Category</label>
-                <select class="form-control" name="dep_id">
-                    <option value="">select department</option>
-                    <?php 
-                    foreach($departments as $department): ?>
+        <div class=" container">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" id="title" placeholder="Block Title">
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Category</label>
+            <select class="form-control" name="dep_id">
+                <option value="">select department</option>
+                <?php
+                foreach ($departments as $department): ?>
                     <option value="<?= $department['dep_id'] ?>"><?= $department['dep_name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="short_description" class="form-label">Short Description</label>
-                <textarea class="form-control" name="short_description" id="short_description" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">Image</label>
-                <input type="file" accept="image/*" name="image" class="form-control" id="image"
-                    placeholder="Block Title">
-            </div>
-            <div class="mb-3">
-                <input type="submit" name="submit" class="form-control" id="submit">
-            </div>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="short_description" class="form-label">Short Description</label>
+            <textarea class="form-control" name="short_description" id="short_description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" accept="image/*" name="image" class="form-control" id="image"
+                placeholder="Block Title">
+        </div>
+        <div class="mb-3">
+            <input type="submit" name="submit" class="form-control" id="submit">
+        </div>
         </div>
     </form>
     <!-- End Form -->

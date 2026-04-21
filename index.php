@@ -5,20 +5,20 @@ if (isset($_POST['type']) && $_POST['type'] == "edit") {
 
 
     $imageQuery = '';
-    if(!empty($_FILES['image'])) {
+    if (!empty($_FILES['image'])) {
         $image = $_FILES['image']['name'];
         $uploadDir = 'images/';
         $imagePath = $uploadDir . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
 
-        
+
         $imageQuery = ', image = "' .   $imagePath . '"';
     }
 
 
     $sql = "UPDATE blogs set title = :title, short_description =:short_description, description =:description, dep_id = :dep_id $imageQuery where id =:id";
 
-    
+
     $stmt = $pdo->prepare($sql);
     // print_r($_POST);
     $stmt->execute([
@@ -93,7 +93,13 @@ if (isset($_POST['type']) && $_POST['type'] == "delete_dep") {
             <a class="flex-sm-fill text-sm-center nav-link " href="#">Home</a>
             <a class="flex-sm-fill text-sm-center nav-link " href="#">Features</a>
             <a class="flex-sm-fill text-sm-center nav-link " href="#">Contact</a>
-            <a class="flex-sm-fill text-sm-center nav-link " href="#">More</a>
+            <?php
+            session_start();
+            if (!empty($_SESSION['user'])): ?>
+                <a class="flex-sm-fill text-sm-center nav-link user" href="logout.php" title="logout">
+                    Welcome<?= " " . $_SESSION['user']['user_name'] ?> <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            <?php endif; ?>
             <a class="flex-sm-fill text-sm-center nav-link active" href="add.php">Add</a>
         </div>
     </nav>
@@ -101,23 +107,17 @@ if (isset($_POST['type']) && $_POST['type'] == "delete_dep") {
     <!-- Start blog Word -->
     <p class="blogword">Blog</p>
     <!-- End blog Word -->
-    <?php 
-    session_start();
-    if(!empty($_SESSION['user'])): ?>
-        <p class="blogword" style="font-size: 1rem; color: black;">Welcome<?= " " . $_SESSION['user']['user_name'] ?></p>
-    <?php endif; ?>
+
     <!-- Start content -->
     <div class="content">
         <div class="page d-flex mb-5 container justify-content-between">
             <div class="cards d-flex flex-wrap gap-3">
                 <?php
-
                 foreach ($blogs as $blog) {
-
                 ?>
                     <!-- Start Card -->
                     <div class="card col-12 col-md-4" style="width: 18rem;" id="card_block<?= $blog['id'] ?>">
-                        <p class="head" ><?= $blog['title'] ?></p>
+                        <p class="head"><?= $blog['title'] ?></p>
                         <img src="<?= $blog['image'] ?>" class="card-img-top" alt="">
                         <div class="text mt-3">
                             <p class="card-text"><a href="show.php?id=<?= $blog['id'] ?>"><?= $blog['short_description'] ?></a></p>
@@ -342,6 +342,7 @@ if (isset($_POST['type']) && $_POST['type'] == "delete_dep") {
                     bootstrap.Modal.getInstance(document.getElementById('delete_modle_' + id)).hide();
                 });
         }
+
         function editPost(id) {
             const file = document.body.querySelector('#editForm_' + id + ' .image');
             const savefile = file.files[0];
@@ -350,12 +351,13 @@ if (isset($_POST['type']) && $_POST['type'] == "delete_dep") {
                 // ✅ Create object URL for preview
                 const clonedFile = new File(
                     [savefile],
-                    savefile.name,
-                    { type: savefile.type }
+                    savefile.name, {
+                        type: savefile.type
+                    }
                 );
 
                 let imageUrl = URL.createObjectURL(clonedFile);
-        
+
                 document.body.querySelector('#card_block' + id + ' .card-img-top').src = imageUrl;
             }
 
@@ -430,8 +432,8 @@ if (isset($_POST['type']) && $_POST['type'] == "delete_dep") {
 
 
         fetch('https://jsonplaceholder.typicode.com/posts/1')
-        .then((response) => response.json())
-        .then((json) => console.log(json));
+            .then((response) => response.json())
+            .then((json) => console.log(json));
     </script>
 </body>
 

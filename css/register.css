@@ -19,7 +19,11 @@ a {
 .register {
     width: 400px;
     /* height: 600px; */
-    border: 5px solid var(--logo-color);
+    border: 7px solid var(--logo-color);
     background-color: white;
+}
+.register .danger {
+    color: #58151c;
+    font-size: 12px;
 }
 

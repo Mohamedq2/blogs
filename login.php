@@ -76,7 +76,7 @@ if (isset($_POST['email'])) {
                     <p class="alert alert-danger"><?= $message ?></p>
                 <?php endif; ?>
                 <button type="submit" class="btn btn-warning text-white">Login</button>
-                <a href="login.php" target="_blank" rel="noopener noreferrer" class="m-auto" style="display: block;">Sign Up</a>
+                <a href="register.php" rel="noopener noreferrer" class="m-auto" style="display: block;">Sign Up</a>
             </div>
         </form>
         <!-- End Form -->

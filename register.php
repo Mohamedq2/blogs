@@ -2,6 +2,7 @@
 <?php
 
 $message = '';
+$message1 = '';
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
     $stmt_users = $pdo->prepare("select count(*) as users_count from users where email = '$email'");
@@ -10,13 +11,28 @@ if (isset($_POST['email'])) {
     if ($users['users_count'] > 0) {
         $message = 'That email is already registed';
     } else {
-        // insert data 
-        // $user_name = $_POST[]
-        // $user_name = $_POST[]
-        // $email = $_POST['email'];
-        // $stmt_users = $pdo->prepare("select count(*) as users_count from users where email = '$email'");
-        // $stmt_users->execute();
-        // $users = $stmt_users->fetch();
+        if (strlen($_POST['phone']) !== 11 || !is_numeric($_POST['phone'])) {
+            $message1 = '* This number is wrong.';
+        } else {
+            $user_name = $_POST['username'];
+            $phone_number = $_POST['phone'];
+            $email = $_POST['email'];
+            $gender = $_POST['gender'];
+            $password = $_POST['password'];
+            $stmt_users = $pdo->prepare("INSERT INTO users (user_name, phone_number, email, password, gender) 
+                VALUES (:user_name, :phone_number, :email, :password, :gender)");
+
+            $stmt_users->execute([
+                ':user_name'      => $user_name,
+                ':phone_number' => $phone_number,
+                ':email'       => $email,
+                ':password'       => $password,
+                ':gender'      => $gender
+
+            ]);
+            header("Location: login.php");
+            exit;
+        }
     }
 }
 ?>
@@ -54,6 +70,9 @@ if (isset($_POST['email'])) {
     <div class="mb-3">
         <label for="phone" class="form-label">Phone Number</label>
         <input type="text" name="phone" class="form-control" id="phone" placeholder="+20 Phone Number">
+        <?php if (!empty($message1)): ?>
+            <p class="danger"><?= $message1 ?></p>
+        <?php endif; ?>
     </div>
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
@@ -68,7 +87,7 @@ if (isset($_POST['email'])) {
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <div class="input-group">
-            <input type="password" class="form-control" id="password" placeholder="Enter Password">
+            <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
             <button class="btn" type="button" onclick="togglePassword()">
                 <i class="fa-regular fa-eye" id="eyeIcon"></i>
             </button>
@@ -76,7 +95,7 @@ if (isset($_POST['email'])) {
     </div>
     <div class="mb-3">
         <label for="title" class="form-label">Gender</label>
-        <select class="form-control" name="dep_id">
+        <select class="form-control" name="gender">
             <option value="">select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -87,7 +106,7 @@ if (isset($_POST['email'])) {
             <p class="alert alert-danger"><?= $message ?></p>
         <?php endif; ?>
         <button type="submit" class="btn btn-warning text-white">Sign Up</button>
-        <a href="login.php" target="_blank" rel="noopener noreferrer" class="m-auto" style="display: block;">Login</a>
+        <a href="login.php" rel="noopener noreferrer" class="m-auto" style="display: block;">Login</a>
     </div>
     </form>
     <!-- End Form -->

@@ -31,21 +31,27 @@
             <a class="flex-sm-fill text-sm-center nav-link" href="#">Home</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#">Features</a>
             <a class="flex-sm-fill text-sm-center nav-link" href="#">Contact</a>
-            <a class="flex-sm-fill text-sm-center nav-link" href="#">More</a>
+            <?php
+            session_start();
+            if (!empty($_SESSION['user'])): ?>
+                <a class="flex-sm-fill text-sm-center nav-link user" href="logout.php" title="logout">
+                    Welcome<?= " " . $_SESSION['user']['user_name'] ?> <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            <?php endif; ?>
             <a class="flex-sm-fill text-sm-center nav-link active" href="index.php">Blog</a>
         </div>
     </nav>
-    
+
     <!-- End Navbar -->
     <!-- Start Content -->
-    <?php 
+    <?php
     $stmt = $pdo->prepare("SELECT * FROM blogs where id = $_GET[id]");
     $stmt->execute();
 
     $blog = $stmt->fetch();
     ?>
     <div class="container mt-3">
-        <p class="title"><strong>Title:</strong><?=" " .  $blog['title'] ?></p>
+        <p class="title"><strong>Title:</strong><?= " " .  $blog['title'] ?></p>
         <p class="short_desc"><strong>Short Description:</strong><?= " " . $blog['short_description'] ?></p>
         <div class="image ">
             <img src="<?= $blog['image'] ?>" alt="blog image" class="rounded">
@@ -67,4 +73,5 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/all.min.js"></script>
 </body>
+
 </html>
